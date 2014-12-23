@@ -16,10 +16,6 @@ RUN mkdir -p /var/log/supervisor
 # Add services configuration for supervisor
 COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Configure 'c3-next' service startup in supervisor
-COPY conf/start_c3.sh /usr/bin/start_c3.sh
-RUN chmod +x /usr/bin/start_c3.sh
-
 # Setup root credentials for ssh
 RUN echo 'root:password' > /root/passwdfile
 RUN cat /root/passwdfile | chpasswd
@@ -42,7 +38,6 @@ RUN cp /opt/virgo/configuration/serviceability.xml /opt/virgo/configuration/serv
 
 RUN wget -O /opt/virgo/configuration/serviceability.xml https://raw.githubusercontent.com/ifunsoftware/c3-next/master/c3-deploy/src/main/config/serviceability.xml
 
-EXPOSE 22 8080 8443 7375
+EXPOSE 22
 
-#Uncomment this to run all services with supervisor daemon
-#ENTRYPOINT ["/usr/bin/supervisord"]
+ENTRYPOINT ["/usr/bin/supervisord"]
