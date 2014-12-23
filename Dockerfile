@@ -19,6 +19,17 @@ COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Configure 'c3-next' service startup in supervisor
 COPY conf/start_c3.sh /usr/bin/start_c3.sh
 RUN chmod +x /usr/bin/start_c3.sh
+
+# Setup root credentials for ssh
+RUN echo 'root:password' > /root/passwdfile
+RUN cat /root/passwdfile | chpasswd
+RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+ENV NOTVISIBLE "in users profile"
+RUN echo "export VISIBLE=now" >> /etc/profile
+
 RUN apt-get install unzip -y && apt-get clean
 
 RUN wget -O /opt/virgo.zip http://ftp.snt.utwente.nl/pub/software/eclipse//virgo/release/VJS/3.5.0.RELEASE/virgo-jetty-server-3.5.0.RELEASE.zip 
