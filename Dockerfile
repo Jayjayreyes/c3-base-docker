@@ -42,7 +42,7 @@ RUN cp /opt/virgo/configuration/serviceability.xml /opt/virgo/configuration/serv
 
 RUN wget -O /opt/virgo/configuration/serviceability.xml https://raw.githubusercontent.com/ifunsoftware/c3-next/master/c3-deploy/src/main/config/serviceability.xml
 
-EXPOSE 8080 8443 7375
+EXPOSE 22 8080 8443 7375
 
 #Uncomment this to run virgo
 #CMD JAVA_HOME="$(update-java-alternatives -l | cut -d ' ' -f 3)" JAVA_OPTS=-Xmx1024m /opt/virgo/bin/startup.sh
