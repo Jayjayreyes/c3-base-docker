@@ -8,6 +8,13 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install oracle-java
 
 RUN echo JAVA_HOME="$(update-java-alternatives -l | cut -d ' ' -f 3)" >> /etc/environment 
 
+# Install ssh and supervisor
+RUN apt-get -q -y install openssh-server supervisor
+RUN mkdir -p /var/run/sshd
+RUN mkdir -p /var/log/supervisor
+
+# Add services configuration for supervisor
+COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN apt-get install unzip -y && apt-get clean
 
 RUN wget -O /opt/virgo.zip http://ftp.snt.utwente.nl/pub/software/eclipse//virgo/release/VJS/3.5.0.RELEASE/virgo-jetty-server-3.5.0.RELEASE.zip 
