@@ -44,5 +44,5 @@ RUN wget -O /opt/virgo/configuration/serviceability.xml https://raw.githubuserco
 
 EXPOSE 22 8080 8443 7375
 
-#Uncomment this to run virgo
-#CMD JAVA_HOME="$(update-java-alternatives -l | cut -d ' ' -f 3)" JAVA_OPTS=-Xmx1024m /opt/virgo/bin/startup.sh
+#Uncomment this to run all services with supervisor daemon
+#ENTRYPOINT ["/usr/bin/supervisord"]
