@@ -15,6 +15,10 @@ RUN mkdir -p /var/log/supervisor
 
 # Add services configuration for supervisor
 COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Configure 'c3-next' service startup in supervisor
+COPY conf/start_c3.sh /usr/bin/start_c3.sh
+RUN chmod +x /usr/bin/start_c3.sh
 RUN apt-get install unzip -y && apt-get clean
 
 RUN wget -O /opt/virgo.zip http://ftp.snt.utwente.nl/pub/software/eclipse//virgo/release/VJS/3.5.0.RELEASE/virgo-jetty-server-3.5.0.RELEASE.zip 
